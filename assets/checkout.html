@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Checkout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section h2 {
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+            font-weight: bold;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .col {
+            flex: 1;
+        }
+        
+        .discount-section {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .discount-input-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        #apply-discount-btn {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        #apply-discount-btn:hover {
+            background-color: #0b7dda;
+        }
+        
+        .order-summary {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .summary-row.total {
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-top: 2px solid #ddd;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+        
+        .discount-applied {
+            color: #4CAF50;
+        }
+        
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            font-weight: bold;
+        }
+        
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        
+        .error-message {
+            color: #f44336;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .success-message {
+            color: #4CAF50;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .required {
+            color: #f44336;
+        }
+        
+        .payment-methods {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .payment-method {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .payment-method.selected {
+            border-color: #4CAF50;
+            background-color: #e8f5e9;
+        }
+        
+        .payment-method input[type="radio"] {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Checkout</h1>
+        
+        <form id="checkout-form">
+            <!-- Customer Information -->
+            <div class="section">
+                <h2>Customer Information</h2>
+                
+                <div class="form-group">
+                    <label for="email">Email <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                    <span class="error-message" id="email-error">Please enter a valid email</span>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="first-name">First Name <span class="required">*</span></label>
+                            <input type="text" id="first-name" name="first-name" required>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="last-name">Last Name <span class="required">*</span></label>
+                            <input type="text" id="last-name" name="last-name" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+            </div>
+            
+            <!-- Shipping Address -->
+            <div class="section">
+                <h2>Shipping Address</h2>
+                
+                <div class="form-group">
+                    <label for="address">Street Address <span class="required">*</span></label>
+                    <input type="text" id="address" name="address" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address2">Apartment, suite, etc. (optional)</label>
+                    <input type="text" id="address2" name="address2">
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="city">City <span class="required">*</span></label>
+                            <input type="text" id="city" name="city" required>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="state">State <span class="required">*</span></label>
+                            <select id="state" name="state" required>
+                                <option value="">Select State</option>
+                                <option value="CA">California</option>
+                                <option value="NY">New York</option>
+                                <option value="TX">Texas</option>
+                                <option value="FL">Florida</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="zip">ZIP Code <span class="required">*</span></label>
+                    <input type="text" id="zip" name="zip" required>
+                </div>
+            </div>
+            
+            <!-- Discount Code -->
+            <div class="section">
+                <h2>Discount Code</h2>
+                <div class="discount-section">
+                    <div class="discount-input-group">
+                        <input type="text" id="discount-code" name="discount-code" placeholder="Enter discount code">
+                        <button type="button" id="apply-discount-btn">Apply</button>
+                    </div>
+                    <span class="error-message" id="discount-error">Invalid discount code</span>
+                    <span class="success-message" id="discount-success">Discount applied successfully!</span>
+                </div>
+            </div>
+            
+            <!-- Payment Method -->
+            <div class="section">
+                <h2>Payment Method</h2>
+                <div class="payment-methods">
+                    <div class="payment-method" id="payment-credit-card">
+                        <input type="radio" id="credit-card" name="payment-method" value="credit-card" checked>
+                        <label for="credit-card">Credit Card</label>
+                    </div>
+                    <div class="payment-method" id="payment-paypal">
+                        <input type="radio" id="paypal" name="payment-method" value="paypal">
+                        <label for="paypal">PayPal</label>
+                    </div>
+                    <div class="payment-method" id="payment-bank">
+                        <input type="radio" id="bank-transfer" name="payment-method" value="bank-transfer">
+                        <label for="bank-transfer">Bank Transfer</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Order Summary -->
+            <div class="section">
+                <h2>Order Summary</h2>
+                <div class="order-summary">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">$99.99</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping:</span>
+                        <span id="shipping">$9.99</span>
+                    </div>
+                    <div class="summary-row discount-applied" id="discount-row" style="display: none;">
+                        <span>Discount:</span>
+                        <span id="discount-amount">-$0.00</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="total">$109.98</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn" id="place-order-btn">Place Order</button>
+            
+            <div class="success-message" id="order-success" style="margin-top: 15px;">
+                Order placed successfully! Order ID: <span id="order-id"></span>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        // Valid discount codes for testing
+        const validDiscounts = {
+            'SAVE10': 10,
+            'SAVE20': 20,
+            'FREESHIP': 0  // Free shipping
+        };
+        
+        let discountApplied = false;
+        let currentDiscount = 0;
+        
+        // Apply discount code
+        document.getElementById('apply-discount-btn').addEventListener('click', function() {
+            const code = document.getElementById('discount-code').value.toUpperCase();
+            const errorMsg = document.getElementById('discount-error');
+            const successMsg = document.getElementById('discount-success');
+            
+            errorMsg.style.display = 'none';
+            successMsg.style.display = 'none';
+            
+            if (validDiscounts.hasOwnProperty(code)) {
+                discountApplied = true;
+                currentDiscount = validDiscounts[code];
+                successMsg.style.display = 'block';
+                updateTotal();
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        });
+        
+        // Update total
+        function updateTotal() {
+            const subtotal = 99.99;
+            let shipping = 9.99;
+            let discount = 0;
+            
+            if (discountApplied) {
+                if (currentDiscount === 0) {
+                    // Free shipping
+                    shipping = 0;
+                } else {
+                    // Percentage discount
+                    discount = subtotal * (currentDiscount / 100);
+                }
+                
+                document.getElementById('discount-row').style.display = 'flex';
+                document.getElementById('discount-amount').textContent = '-$' + discount.toFixed(2);
+            }
+            
+            const total = subtotal + shipping - discount;
+            document.getElementById('shipping').textContent = '$' + shipping.toFixed(2);
+            document.getElementById('total').textContent = '$' + total.toFixed(2);
+        }
+        
+        // Payment method selection
+        document.querySelectorAll('.payment-method').forEach(method => {
+            method.addEventListener('click', function() {
+                document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+                this.classList.add('selected');
+                this.querySelector('input[type="radio"]').checked = true;
+            });
+        });
+        
+        // Form submission
+        document.getElementById('checkout-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Generate order ID
+            const orderId = 'ORD-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+            document.getElementById('order-id').textContent = orderId;
+            document.getElementById('order-success').style.display = 'block';
+            
+            // Disable form
+            document.getElementById('place-order-btn').disabled = true;
+            document.getElementById('place-order-btn').textContent = 'Order Placed';
+        });
+        
+        // Initialize first payment method as selected
+        document.getElementById('payment-credit-card').classList.add('selected');
+    </script>
+</body>
+</html>

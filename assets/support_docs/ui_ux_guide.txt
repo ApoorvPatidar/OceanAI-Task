@@ -1,0 +1,212 @@
+UI/UX DESIGN GUIDE - E-COMMERCE CHECKOUT
+
+===========================================
+LAYOUT & STRUCTURE
+===========================================
+
+Container
+- Maximum width: 800px
+- Background: White (#FFFFFF)
+- Padding: 30px
+- Border radius: 8px
+- Box shadow: 0 2px 10px rgba(0,0,0,0.1)
+
+Sections
+- Margin between sections: 30px
+- Section headers: 1.2rem, color #555
+
+===========================================
+COLOR SCHEME
+===========================================
+
+Primary Colors
+- Main Green: #4CAF50 (submit buttons, success states)
+- Main Blue: #2196F3 (action buttons)
+- Error Red: #f44336
+- Success Green: #4CAF50
+
+Background Colors
+- Page background: #f5f5f5
+- Container background: #FFFFFF
+- Section background: #f9f9f9
+- Selected state: #e8f5e9
+
+Text Colors
+- Primary text: #333
+- Secondary text: #555
+- Label text: #666
+- Required asterisk: #f44336
+
+===========================================
+FORM ELEMENTS
+===========================================
+
+Input Fields
+- Width: 100%
+- Padding: 10px
+- Border: 1px solid #ddd
+- Border radius: 4px
+- Font size: 14px
+- Focus border color: #4CAF50
+
+Labels
+- Display: block
+- Margin bottom: 5px
+- Font weight: bold
+- Color: #666
+
+Required Fields
+- Marked with red asterisk (*) after label
+- Color: #f44336
+
+===========================================
+BUTTONS
+===========================================
+
+Primary Button (Submit)
+- Background: #4CAF50
+- Color: white
+- Padding: 15px 30px
+- Border radius: 4px
+- Font size: 16px
+- Width: 100%
+- Font weight: bold
+- Hover background: #45a049
+
+Secondary Button (Apply Discount)
+- Background: #2196F3
+- Color: white
+- Padding: 10px 20px
+- Border radius: 4px
+- Font size: 14px
+- Hover background: #0b7dda
+
+===========================================
+PAYMENT METHOD SELECTION
+===========================================
+
+Payment Method Cards
+- Display: flex layout
+- Border: 2px solid #ddd
+- Padding: 15px
+- Border radius: 4px
+- Cursor: pointer
+- Text align: center
+
+Selected State
+- Border color: #4CAF50
+- Background: #e8f5e9
+
+===========================================
+MESSAGES & FEEDBACK
+===========================================
+
+Error Messages
+- Color: #f44336
+- Font size: 14px
+- Margin top: 5px
+- Initially hidden (display: none)
+
+Success Messages
+- Color: #4CAF50
+- Font size: 14px
+- Margin top: 5px
+- Initially hidden (display: none)
+
+===========================================
+ORDER SUMMARY
+===========================================
+
+Summary Section
+- Background: #f9f9f9
+- Padding: 20px
+- Border radius: 4px
+
+Summary Rows
+- Display: flex
+- Justify content: space-between
+- Margin bottom: 10px
+
+Total Row
+- Font weight: bold
+- Font size: 1.2rem
+- Border top: 2px solid #ddd
+- Padding top: 10px
+- Margin top: 10px
+
+Discount Row
+- Color: #4CAF50 (discount-applied class)
+
+===========================================
+RESPONSIVE DESIGN
+===========================================
+
+Two-Column Layout
+- Display: flex
+- Gap: 15px
+- Each column: flex: 1
+
+Mobile Considerations
+- Forms stack vertically on small screens
+- Buttons maintain full width
+- Readable font sizes (minimum 14px)
+
+===========================================
+ACCESSIBILITY
+===========================================
+
+Focus States
+- All interactive elements have focus states
+- Focus border color: #4CAF50
+- No outline removal
+
+Required Field Indicators
+- Visual asterisk (*)
+- Required attribute on inputs
+
+Label Association
+- All inputs have associated labels
+- For/ID attribute matching
+
+===========================================
+INTERACTIONS
+===========================================
+
+Discount Code Flow
+1. User enters code in text field
+2. Clicks "Apply" button
+3. System validates code
+4. Shows success or error message
+5. Updates order summary if valid
+
+Form Submission Flow
+1. User fills required fields
+2. Optionally applies discount
+3. Selects payment method
+4. Clicks "Place Order"
+5. Form validates all fields
+6. Generates order ID
+7. Shows success message
+8. Disables form
+
+Payment Method Selection
+1. User clicks payment method card
+2. Card highlights with green border
+3. Radio button auto-selects
+4. Previously selected method deselects
+
+===========================================
+ANIMATION & TRANSITIONS
+===========================================
+
+Hover Effects
+- Button background color transitions
+- Smooth color changes
+
+Focus Effects
+- Border color change on input focus
+- No jarring transitions
+
+State Changes
+- Payment method selection visual feedback
+- Message display/hide transitions

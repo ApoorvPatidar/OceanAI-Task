@@ -1,0 +1,215 @@
+{
+  "api_version": "1.0",
+  "base_url": "https://api.ecommerce-checkout.example.com",
+  "endpoints": [
+    {
+      "path": "/checkout/validate-discount",
+      "method": "POST",
+      "description": "Validate a discount code",
+      "request": {
+        "body": {
+          "discount_code": "string",
+          "order_subtotal": "number"
+        }
+      },
+      "response": {
+        "success": {
+          "status": 200,
+          "body": {
+            "valid": true,
+            "discount_type": "percentage|free_shipping",
+            "discount_value": "number",
+            "discount_amount": "number",
+            "message": "Discount applied successfully!"
+          }
+        },
+        "error": {
+          "status": 400,
+          "body": {
+            "valid": false,
+            "message": "Invalid discount code"
+          }
+        }
+      },
+      "valid_codes": {
+        "SAVE10": {
+          "type": "percentage",
+          "value": 10,
+          "description": "10% off subtotal"
+        },
+        "SAVE20": {
+          "type": "percentage",
+          "value": 20,
+          "description": "20% off subtotal"
+        },
+        "FREESHIP": {
+          "type": "free_shipping",
+          "value": 0,
+          "description": "Free shipping"
+        }
+      }
+    },
+    {
+      "path": "/checkout/submit-order",
+      "method": "POST",
+      "description": "Submit a checkout order",
+      "request": {
+        "body": {
+          "customer": {
+            "email": "string (required)",
+            "first_name": "string (required)",
+            "last_name": "string (required)",
+            "phone": "string (optional)"
+          },
+          "shipping_address": {
+            "street_address": "string (required)",
+            "address_line_2": "string (optional)",
+            "city": "string (required)",
+            "state": "string (required)",
+            "zip_code": "string (required)"
+          },
+          "payment_method": "credit-card|paypal|bank-transfer",
+          "discount_code": "string (optional)",
+          "order_summary": {
+            "subtotal": "number",
+            "shipping": "number",
+            "discount": "number",
+            "total": "number"
+          }
+        }
+      },
+      "response": {
+        "success": {
+          "status": 200,
+          "body": {
+            "order_id": "string",
+            "status": "confirmed",
+            "total": "number",
+            "confirmation_email_sent": true,
+            "estimated_delivery": "string (ISO date)"
+          }
+        },
+        "error": {
+          "status": 400,
+          "body": {
+            "error": "string",
+            "validation_errors": [
+              {
+                "field": "string",
+                "message": "string"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "path": "/checkout/calculate-total",
+      "method": "POST",
+      "description": "Calculate order total with discount and shipping",
+      "request": {
+        "body": {
+          "subtotal": "number",
+          "shipping_method": "standard",
+          "discount_code": "string (optional)",
+          "state": "string"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "subtotal": "number",
+          "shipping": "number",
+          "discount": "number",
+          "tax": "number",
+          "total": "number",
+          "breakdown": {
+            "discount_applied": "boolean",
+            "discount_type": "string",
+            "shipping_cost": "number"
+          }
+        }
+      },
+      "shipping_rates": {
+        "standard": 9.99,
+        "express": 19.99,
+        "overnight": 29.99
+      }
+    },
+    {
+      "path": "/checkout/validate-email",
+      "method": "POST",
+      "description": "Validate email format and availability",
+      "request": {
+        "body": {
+          "email": "string"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "valid": "boolean",
+          "message": "string"
+        }
+      },
+      "validation_rules": {
+        "format": "Must contain @ and domain extension",
+        "max_length": 255,
+        "allowed_domains": "all"
+      }
+    }
+  ],
+  "error_codes": {
+    "400": "Bad Request - Invalid input data",
+    "401": "Unauthorized - API key missing or invalid",
+    "404": "Not Found - Endpoint does not exist",
+    "422": "Unprocessable Entity - Validation failed",
+    "500": "Internal Server Error - Server error occurred"
+  },
+  "field_validation": {
+    "email": {
+      "required": true,
+      "format": "email",
+      "error_message": "Please enter a valid email"
+    },
+    "first_name": {
+      "required": true,
+      "min_length": 1,
+      "max_length": 50,
+      "error_message": "First name is required"
+    },
+    "last_name": {
+      "required": true,
+      "min_length": 1,
+      "max_length": 50,
+      "error_message": "Last name is required"
+    },
+    "phone": {
+      "required": false,
+      "format": "phone",
+      "error_message": "Please enter a valid phone number"
+    },
+    "street_address": {
+      "required": true,
+      "min_length": 5,
+      "max_length": 100,
+      "error_message": "Street address is required"
+    },
+    "city": {
+      "required": true,
+      "min_length": 2,
+      "max_length": 50,
+      "error_message": "City is required"
+    },
+    "state": {
+      "required": true,
+      "allowed_values": ["CA", "NY", "TX", "FL"],
+      "error_message": "Please select a state"
+    },
+    "zip_code": {
+      "required": true,
+      "format": "^[0-9]{5}(-[0-9]{4})?$",
+      "error_message": "Please enter a valid ZIP code"
+    }
+  }
+}
